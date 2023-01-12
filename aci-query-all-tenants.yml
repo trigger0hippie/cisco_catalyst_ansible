@@ -1,8 +1,6 @@
-- name: Query all tenants
-  cisco.aci.aci_tenant:
-    host: ACI_sandbox
-    username: admin
-    password: !v3G@!4@Y
-    state: query
-  delegate_to: localhost
-  register: query_result
+- name: Hello World Sample
+  hosts: all
+  tasks:
+    - name: Hello Message
+      debug:
+        msg: "Hello World!"
