@@ -12,4 +12,4 @@
   - name: Display only tenant names
     ansible.builtin.debug:
       var: item
-    loop: "{{ community.general.json_query('fvTenant.name') }}"
+    loop: "{{ json_query('fvTenant.name') }}"
