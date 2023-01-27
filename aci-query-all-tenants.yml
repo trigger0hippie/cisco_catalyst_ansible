@@ -12,4 +12,4 @@
   - name: Display only tenant names
     ansible.builtin.debug:
       var: query_result
-    loop: "{{ query_result | community.general.json_query('fvTenant.attributes.dn') }}"
+    loop: "{{ query_result.current | community.general.json_query('fvTenant.attributes.dn') }}"
