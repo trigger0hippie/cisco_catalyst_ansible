@@ -9,7 +9,7 @@
       validate_certs: no
    # delegate_to: localhost
     register: query_result
-  - name: Display only tenant names
+  #- name: Display only tenant names
     ansible.builtin.debug:
       var: item
     loop: "{{ current | community.general.json_query('fvTenant.attributes.dn') }}"
