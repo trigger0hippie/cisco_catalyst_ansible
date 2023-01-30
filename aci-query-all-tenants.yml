@@ -11,5 +11,5 @@
     register: query_result
   - name: Display only tenant names
     ansible.builtin.debug:
-      var: query_result
-    #loop: "{{ query_result.current | community.general.json_query('fvTenant.attributes.dn') }}"
+      msg: "{{ query_result | json_query('current[].fvTenant.attributes.dn')  }}"
+      
