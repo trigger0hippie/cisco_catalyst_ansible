@@ -10,7 +10,6 @@
     aci_tenant:
       host: '{{ inventory_hostname }}'
       tenant: '{{ aci_tenant }}'
-      description: Jambra Ansible i AWX
       state: present
       validate_certs: '{{ validate_certs }}'
 
