@@ -1,0 +1,47 @@
+---
+- hosts: all
+  connection: local
+  gather_facts: false
+  vars:
+    validate_certs: no
+  tasks:
+  - name: Query leaf access interface profiles
+    cisco.aci.aci_interface_policy_leaf_profile:
+      host: '{{ inventory_hostname }}'
+      #<<: *aci_login
+      state: query
+    register: interface_plcy_leaf_result
+  - name: Display leaf access interface profiles names
+    ansible.builtin.debug:
+      msg: "{{ interface_plcy_leaf_result | json_query('current[].infraAccPortP.attributes.name') | list }}"
+    register: leaf_profiles
+  - name: Query details per leaf access profile
+    cisco.aci.aci_access_port_block_to_access_port:
+      host: '{{ inventory_hostname }}'
+      #<<: *aci_login
+      state: query
+      validate_certs: no
+      leaf_interface_profile: "{{ item }}"
+    with_items:
+      "{{ leaf_profiles.values() | first }}"
+    register: interface_per_leaf_profile
+#  - name: Display details per leaf access profile
+#    debug:
+#      msg: "{{ interface_per_leaf_profile }}"
+  - name: Query port blocks per leaf access profile
+    ansible.builtin.debug:
+      msg: "{{ for_loop.split('\n') | map('trim') }}"
+#   register: port_block
+    vars:
+      for_loop: |
+         {% for index in range(interface_per_leaf_profile.results | length) %}
+          {% for index2 in range (interface_per_leaf_profile.results[index].current | length) %}
+           {% for index3 in range (interface_per_leaf_profile.results[index].current[index2].infraAccPortP.children | length) %}
+            {% for index4 in range (interface_per_leaf_profile.results[index].current[index2].infraAccPortP.children[index3].infraHPortS.children | length) %}
+             {% for entry in (interface_per_leaf_profile.results[index].current[index2].infraAccPortP.children[index3].infraHPortS.children[index4]) %}
+                {{ interface_per_leaf_profile.results[index].current[index2].infraAccPortP.attributes.name }} == BLOCK - {{ interface_per_leaf_profile.results[index].current[index2].infraAccPortP.children[index3].infraHPortS.attributes.rn }}, PORT -{{ interface_per_leaf_profile.results[index].current[index2].infraAccPortP.children[index3].infraHPortS.children[index4][entry].attributes.toCard }}/{{ interface_per_leaf_profile.results[index].current[index2].infraAccPortP.children[index3].infraHPortS.children[index4][entry].attributes.toPort }}
+             {% endfor %}
+            {% endfor %}
+           {% endfor %}
+          {% endfor %}
+         {% endfor %}
