@@ -3,6 +3,8 @@
   hosts: all
   gather_facts: false
   connection: local
+  vars:
+    validate_certs: no
   tasks:
   - name: Create a tenant
     aci_tenant:
@@ -10,7 +12,7 @@
       tenant: '{{ aci_tenant }}'
       description: Jambra Ansible i AWX
       state: present
-      validate_certs: no
+      validate_certs: '{{ validate_certs }}'
 
   - name: Add a new AP
     aci_ap:
@@ -18,7 +20,7 @@
       tenant: '{{ aci_tenant }}'
       ap: '{{ aci_ap_name }}'
       state: present
-      validate_certs: no
+      validate_certs: '{{ validate_certs }}'
 
   - name: Add a new VRF to a tenant
     aci_vrf:
@@ -28,7 +30,7 @@
       policy_control_preference: enforced
       policy_control_direction: ingress
       state: present
-      validate_certs: no
+      validate_certs: '{{ validate_certs }}'
 
   - name: Add Bridge Domain
     aci_bd:
@@ -37,7 +39,7 @@
       bd: '{{ aci_bd }}'
       vrf: '{{ aci_vrf }}'
       state: present
-      validate_certs: no
+      validate_certs: '{{ validate_certs }}'
 
   - name: Add new EPGs
     aci_epg:
@@ -50,7 +52,7 @@
       priority: unspecified
       intra_epg_isolation: unenforced
       state: present
-      validate_certs: no
+      validate_certs: '{{ validate_certs }}'
     loop: '{{ aci_epgs }}'
     loop_control:
       loop_var: all_epgs
