@@ -3,17 +3,6 @@
   hosts: all
   gather_facts: false
   connection: local
-#  vars:
-#    aci_tenant: jambra_ansible_tenant
-#    aci_ap_name: jambra_ansible_AP
-#    aci_bd: jambra_ansible_BD
-#    aci_vrf: jambra_ansible_VRF
-#    aci_epgs:
-#      - _epg: jambra_ansible_EPG1
-#        _desc: EPG1 iz AWX-a
-#      - _epg: jambra_ansible_EPG2
-#        _desc: EPG2 iz AWX-a 
-
   tasks:
   - name: Create a tenant
     aci_tenant:
@@ -28,7 +17,6 @@
       host: '{{ inventory_hostname }}'
       tenant: '{{ aci_tenant }}'
       ap: '{{ aci_ap_name }}'
-      description: Jambra Ansible i AWX
       state: present
       validate_certs: no
 
@@ -37,7 +25,6 @@
       host: '{{ inventory_hostname }}'
       vrf: '{{ aci_vrf }}'
       tenant: '{{ aci_tenant }}'
-      descr: Jambra Ansible i AWX
       policy_control_preference: enforced
       policy_control_direction: ingress
       state: present
