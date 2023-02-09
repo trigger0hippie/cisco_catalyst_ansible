@@ -10,6 +10,7 @@
       host: '{{ inventory_hostname }}'
       #<<: *aci_login
       state: query
+      validate_certs: '{{ validate_certs }}' 
     register: interface_plcy_leaf_result
   - name: Display leaf access interface profiles names
     ansible.builtin.debug:
@@ -20,7 +21,7 @@
       host: '{{ inventory_hostname }}'
       #<<: *aci_login
       state: query
-      validate_certs: no
+      validate_certs: '{{ validate_certs }}' 
       leaf_interface_profile: "{{ item }}"
     with_items:
       "{{ leaf_profiles.values() | first }}"
