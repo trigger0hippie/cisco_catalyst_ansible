@@ -31,7 +31,7 @@
 #      msg: "{{ interface_per_leaf_profile }}"
   - name: Query port blocks per leaf access profile
     ansible.builtin.debug:
-      msg: "{{ for_loop.split('\n') | map('trim') | first }}"
+      msg: "{{ for_loop.split('\n') | map('trim') }}"
 #   register: port_block
     vars:
       for_loop: |
