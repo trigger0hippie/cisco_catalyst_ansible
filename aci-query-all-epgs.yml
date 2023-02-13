@@ -1,1 +1,37 @@
 
+
+
+  - name: Query all APs
+    cisco.aci.aci_ap:
+      <<: *aci_login
+      state: query
+    register: ap_all
+  - name: Display all APs list
+    debug:
+     msg: "{{ ap_all | json_query('current[].fvAp.attributes.name')}}"
+    register: ap_all_name_list
+  - name: Query all EPGs per AP
+    cisco.aci.aci_epg:
+      <<: *aci_login
+      state: query
+      ap: '{{ item }}'
+    with_items:
+      "{{ ap_all_name_list.values() | first }}"
+    register: epg_all
+  - name: Display all EPGs
+    debug:
+      msg: "{{ epg_all_loop.split('\n') }}"
+    vars:
+      epg_all_loop: |
+       {% for index in range(1, (epg_all.results | length)) %}
+       {% for index2 in range(epg_all.results[index].current | length) %}
+       {% for index3 in range(epg_all.results[index].current[index2].fvAp.children | length) %}
+       {% for index4 in range(epg_all.results[index].current[index2].fvAp.children[index3] | length) %}
+       {% for entry in epg_all.results[index].current[index2].fvAp.children[index3].fvAEPg.children[index4] %}
+       APPLICATION PROFILE = {{ epg_all.results[index].current[index2].fvAp.attributes.dn }} | EPG = {{ epg_all.results[index].current[index2].fvAp.children[index3].fvAEPg.attributes.name }} | BRIDGE DOMAIN = {{ epg_all.results[index].current[index2].fvAp.children[index3].fvAEPg.children[index4].fvRsBd.attributes.tnFvBDName  }}
+       {% endfor %}
+       {% endfor %}
+       {% endfor %}
+       {% endfor %}
+       {% endfor %}
+
