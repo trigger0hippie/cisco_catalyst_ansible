@@ -6,7 +6,7 @@
   vars:
     validate_certs: no
 #    
-# extra vars are defined in job template in Ansible AWX
+# extra vars need to be defined separately, eg in job template in Ansible AWX
 # aci_tenant, aci_ap_name, aci_vrf, aci_bd, all_epgs
 #
   tasks:
