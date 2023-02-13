@@ -1,6 +1,6 @@
-
-
-
+- hosts: all
+  connection: local
+  gather_facts: false
   - name: Query all APs
     cisco.aci.aci_ap:
       <<: *aci_login
