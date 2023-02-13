@@ -1,10 +1,14 @@
 - hosts: all
   connection: local
   gather_facts: false
+  vars:
+    validate_certs: no
+  tasks:
   - name: Query all APs
     cisco.aci.aci_ap:
       #<<: *aci_login
       host: '{{ inventory_hostname }}'
+      validate_certs: '{{ validate_certs }}'
       state: query
     register: ap_all
   - name: Display all APs list
@@ -15,6 +19,7 @@
     cisco.aci.aci_epg:
       #<<: *aci_login
       host: '{{ inventory_hostname }}'
+      validate_certs: '{{ validate_certs }}'
       state: query
       ap: '{{ item }}'
     with_items:
