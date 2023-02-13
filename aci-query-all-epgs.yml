@@ -3,7 +3,8 @@
   gather_facts: false
   - name: Query all APs
     cisco.aci.aci_ap:
-      <<: *aci_login
+      #<<: *aci_login
+      host: '{{ inventory_hostname }}'
       state: query
     register: ap_all
   - name: Display all APs list
@@ -12,7 +13,8 @@
     register: ap_all_name_list
   - name: Query all EPGs per AP
     cisco.aci.aci_epg:
-      <<: *aci_login
+      #<<: *aci_login
+      host: '{{ inventory_hostname }}'
       state: query
       ap: '{{ item }}'
     with_items:
