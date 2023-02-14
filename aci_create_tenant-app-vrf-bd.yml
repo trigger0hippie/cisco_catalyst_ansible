@@ -1,0 +1,50 @@
+---
+- name: CREATE TENANT INFRASTRUCTURE
+  hosts: aci_virtual
+  gather_facts: false
+  connection: local
+  vars:
+    validate_certs: no
+  tasks:
+    - name: Create Tenant
+      aci_tenant:
+        host: '{{ inventory_hostname }}'
+        validate_certs: "{{ validate_certs }}"
+        tenant: "{{ tenant.name }}"
+        description: "{{ tenant.description }}"
+        state: present
+      delegate_to: localhost
+ 
+    - name: Create VRF
+      aci_vrf:
+        host: '{{ inventory_hostname }}'
+        validate_certs: "{{ validate_certs }}"
+        tenant: "{{ tenant.name }}"
+        vrf: "{{ item.name }}"
+        state: present
+      delegate_to: localhost
+      loop: "{{ tenant.vrfs }}"
+ 
+    - name: Create Bridge Domains
+      aci_bd:
+        host: '{{ inventory_hostname }}'
+        validate_certs: "{{ validate_certs }}" 
+        tenant: "{{ tenant.name }}"
+        vrf: "{{ item.vrf }}"
+        bd: "{{ item.name }}"
+        state: present
+      delegate_to: localhost
+      loop: "{{ tenant.bridge_domains }}"
+ 
+    - name: Create Bridge Domain Subnets
+      aci_bd_subnet:
+        host: '{{ inventory_hostname }}'
+        validate_certs: "{{ validate_certs }}" 
+        tenant: "{{ tenant.name }}"
+        bd: "{{ item.name }}"
+        gateway: "{{ item.subnet.split('/') | first }}"
+        mask: "{{ item.subnet.split('/') | last }}"
+        description: "{{ item.description }}"
+        state: present
+      delegate_to: localhost
+      loop: "{{ tenant.bridge_domains }}"
