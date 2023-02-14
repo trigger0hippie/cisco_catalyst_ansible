@@ -1,0 +1,25 @@
+---
+- name: CREATE STATIC PATH BINDINGS TO EPG
+  hosts: all
+  gather_facts: false
+  connection: local
+  vars:
+    validate_certs: no
+  tasks:
+  - name: Deploy static path bindings to EPG
+    aci_static_binding_to_epg:
+      validate_certs: "{{ validate_certs }}"
+      host: "{{ inventory_hostname }}"
+      tenant: "{{ item.value.tenant }}"
+      ap: "{{ item.value.ap }}"
+      epg: "VLAN-{{ item.key }}-EPG"   
+      interface_type: "{{ item.value.interface_type }}"
+      interface_mode: "{{ item.value.interfacemode }}"
+      interface: "{{ item.value.interface }}"
+      pod_id: "{{ item.value.podid }}"
+      encap_id: "{{ item.value.encapid }}"
+      leafs: "{{ item.value.leafs }}"
+      # use "absent" to remove binding
+      state: "present"
+    delegate_to: localhost
+    loop: '{{ static_binding.dict|dict2items }}'
