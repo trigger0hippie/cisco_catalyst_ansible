@@ -1,6 +1,6 @@
 ---
 - name: CREATE TENANT INFRASTRUCTURE
-  hosts: aci_virtual
+  hosts: all
   gather_facts: false
   connection: local
   vars:
