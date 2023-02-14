@@ -8,7 +8,7 @@
   tasks: 
     - name: Create Application Profile
       aci_ap:
-        host: '{{ inventory_hostname }}'
+        host: "{{ inventory_hostname }}"
         validate_certs: "{{ validate_certs }}" 
         tenant: "{{ tenant.name }}"
         ap: "{{ item.name }}"
