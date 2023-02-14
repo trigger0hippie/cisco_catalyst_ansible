@@ -1,0 +1,97 @@
+---
+- name: CREATE FILTERS AND FILTER ENTRIES
+  hosts: all
+  gather_facts: false
+  connection: local
+  vars:
+    validate_certs: no
+  tasks:
+    - name: Create Filter
+      aci_filter:
+        host: '{{ inventory_hostname }}'
+        validate_certs: "{{ validate_certs }}" 
+        tenant: "{{ tenant.name }}"
+        filter: "{{ item.name }}"
+        description: "{{ item.description }}"
+        state: present
+      delegate_to: localhost
+      loop: "{{ tenant.filters }}"
+ 
+    - name: Create Filter Entry
+      aci_filter_entry:
+        host: '{{ inventory_hostname }}'
+        validate_certs: "{{ validate_certs }}" 
+        tenant: "{{ tenant.name }}"
+        filter: "{{ item.name }}"
+        entry: "{{ item.entry }}"
+        ether_type: "{{ item.ethertype }}"
+        ip_protocol: "{{ item.ip_protocol }}"
+        dst_port_start: "{{ item.destination_from }}"
+        dst_port_end: "{{ item.destination_to }}"
+        description: "{{ item.description }}"
+        state: present
+      delegate_to: localhost
+      loop: "{{ tenant.filters }}"
+ 
+- name: CREATE CONTRACTS AND CONTRACT SUBJECTS
+  hosts: all
+  gather_facts: false
+  connection: local
+  vars:
+    validate_certs: no
+  tasks:
+    - name: Create Contract
+      aci_contract:
+        host: '{{ inventory_hostname }}'
+        validate_certs: "{{ validate_certs }}" 
+        tenant: "{{ tenant.name }}"
+        contract: "{{ item.name }}"
+        description: "{{ item.description }}"
+        state: present
+      delegate_to: localhost
+      loop: "{{ tenant.contracts }}"
+ 
+    - name: Create Contract Subject
+      aci_contract_subject:
+        host: '{{ inventory_hostname }}'
+        validate_certs: "{{ validate_certs }}" 
+        tenant: "{{ tenant.name }}"
+        contract: "{{ item.name }}"
+        subject: "{{ item.name }}-SUB"
+        description: "{{ item.description }}"
+        state: present
+      delegate_to: localhost
+      loop: "{{ tenant.contracts }}"
+ 
+    - name: Add Filter to Contract Subject
+      aci_contract_subject_to_filter:
+        host: '{{ inventory_hostname }}'
+        validate_certs: "{{ validate_certs }}" 
+        tenant: "{{ tenant.name }}"
+        contract: "{{ item.name }}"
+        subject: "{{ item.name }}-SUB"
+        filter: "{{ item.filter }}"
+        state: present
+      delegate_to: localhost
+      loop: "{{ tenant.contracts }}"
+ 
+ 
+- name: BIND CONTRACTS TO EPGS
+  hosts: all
+  gather_facts: false
+  connection: local
+  vars:
+    validate_certs: no 
+  tasks:
+    - name: Add Contract to EPG
+      aci_epg_to_contract:
+        host: '{{ inventory_hostname }}'
+        validate_certs: "{{ validate_certs }}" 
+        tenant: "{{ tenant.name }}"
+        ap: "{{ item.ap }}"
+        epg: "{{ item.epg }}"
+        contract: "{{ item.contract }}"
+        contract_type: "{{ item.type }}"
+        state: present
+      delegate_to: localhost
+      loop: "{{ tenant.contract_bindings }}"
