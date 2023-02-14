@@ -1,0 +1,45 @@
+---
+- name: CREATE APPLICATION PROFILES AND EPGS
+  hosts: all
+  gather_facts: false
+  connection: local
+  vars:
+    validate_certs: no
+  tasks: 
+    - name: Create Application Profile
+      aci_ap:
+        host: '{{ inventory_hostname }}'
+        validate_certs: "{{ validate_certs }}" 
+        tenant: "{{ tenant.name }}"
+        ap: "{{ item.name }}"
+        description: "{{ item.description }}"
+        state: present
+      delegate_to: localhost
+      loop: "{{ tenant.apps }}"
+ 
+    - name: Create EPG
+      aci_epg:
+        host: '{{ inventory_hostname }}'
+        validate_certs: "{{ validate_certs }}" 
+        tenant: "{{ tenant.name }}"
+        bd: "{{ item.bd }}"
+        ap: "{{ item.ap }}"
+        epg: "{{ item.name }}"
+        description: "{{ item.description }}"
+        state: present
+      delegate_to: localhost
+      loop: "{{ tenant.epgs }}"
+ 
+    - name: Add a new physical domain to EPG binding
+      aci_epg_to_domain:
+        host: '{{ inventory_hostname }}'
+        validate_certs: "{{ validate_certs }}" 
+        tenant: "{{ tenant.name }}"
+        ap: "{{ item.ap }}"
+        epg: "{{ item.name }}"
+        domain: "{{ item.domain }}"
+        domain_type: "{{ domains[item.domain].domain_type }}"
+        #vm_provider: "{{ domains[item.domain].vm_provider }}"
+        state: present
+      delegate_to: localhost
+      loop: "{{ tenant.epgs }}"
