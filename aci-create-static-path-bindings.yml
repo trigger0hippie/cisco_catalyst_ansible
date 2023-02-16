@@ -28,7 +28,7 @@
       state: present
     delegate_to: localhost
     loop: '{{ static_binding }}'
-  - name: Deploy static path bindings to EPG
+  - name: Query static path bindings 
     aci_static_binding_to_epg:
       validate_certs: "{{ validate_certs }}"
       host: "{{ inventory_hostname }}"
@@ -41,7 +41,6 @@
       pod_id: "{{ item.podid }}"
       encap_id: "{{ item.encapid }}"
       leafs: "{{ item.leafs }}"
-      # use "absent" to remove binding
       state: query
     delegate_to: localhost
     loop: '{{ static_binding }}'
