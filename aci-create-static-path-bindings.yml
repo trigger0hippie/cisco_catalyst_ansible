@@ -1,3 +1,8 @@
+#vars must be included separately, eg in job template in AWX
+#static_binding:
+#      - {"podid": "1", "tenant": "TENANT_NAME", "ap": "UserServices_APP", "epg": "Email_EPG", "encapid": "2101", "leafs": "101", "interface": "1/10", "interfacemode": "trunk", "interface_type": "switch_port" }
+#      - {"podid": "1", "tenant": "TENANT_NAME", "ap": "UserServices_APP", "epg": "Email_EPG", "encapid": "2101", "leafs": "101", "interface": "1/11", "interfacemode": "trunk", "interface_type": "switch_port"}
+#      - {"podid": "1", "tenant": "TENANT_NAME", "ap": "UserServices_APP", "epg": "Email_EPG", "encapid": "2101", "leafs": "101", "interface": "1/12", "interfacemode": "trunk", "interface_type": "switch_port"}
 ---
 - name: CREATE STATIC PATH BINDINGS TO EPG
   hosts: all
@@ -10,16 +15,46 @@
     aci_static_binding_to_epg:
       validate_certs: "{{ validate_certs }}"
       host: "{{ inventory_hostname }}"
-      tenant: "{{ item.value.tenant }}"
-      ap: "{{ item.value.ap }}"
-      epg: "VLAN-{{ item.key }}-EPG"   
-      interface_type: "{{ item.value.interface_type }}"
-      interface_mode: "{{ item.value.interfacemode }}"
-      interface: "{{ item.value.interface }}"
-      pod_id: "{{ item.value.podid }}"
-      encap_id: "{{ item.value.encapid }}"
-      leafs: "{{ item.value.leafs }}"
+      tenant: "{{ item.tenant }}"
+      ap: "{{ item.ap }}"
+      epg: "{{ item.epg }}"
+      interface_type: "{{ item.interface_type }}"
+      interface_mode: "{{ item.interfacemode }}"
+      interface: "{{ item.interface }}"
+      pod_id: "{{ item.podid }}"
+      encap_id: "{{ item.encapid }}"
+      leafs: "{{ item.leafs }}"
       # use "absent" to remove binding
-      state: "present"
+      state: present
     delegate_to: localhost
-    loop: '{{ static_binding.dict|dict2items }}'
+    loop: '{{ static_binding }}'
+  - name: Deploy static path bindings to EPG
+    aci_static_binding_to_epg:
+      validate_certs: "{{ validate_certs }}"
+      host: "{{ inventory_hostname }}"
+      tenant: "{{ item.tenant }}"
+      ap: "{{ item.ap }}"
+      epg: "{{ item.epg }}"
+      interface_type: "{{ item.interface_type }}"
+      interface_mode: "{{ item.interfacemode }}"
+      interface: "{{ item.interface }}"
+      pod_id: "{{ item.podid }}"
+      encap_id: "{{ item.encapid }}"
+      leafs: "{{ item.leafs }}"
+      # use "absent" to remove binding
+      state: query
+    delegate_to: localhost
+    loop: '{{ static_binding }}'
+    register: static_bindings
+  - name: Display static bindings
+    debug:
+      msg: "{{ static_bindings_loop.split('\n') }}"
+    vars: 
+      static_bindings_loop: |
+        {% for index in range(static_bindings.results | length) %}
+        {% for index2 in range(static_bindings.results[index].current | length)  %}
+        {% for entry in static_bindings.results[index].current[index2] %}
+        EPG = {{ static_bindings.results[index].invocation.module_args.epg }} | LEAF = {{ static_bindings.results[index].invocation.module_args.leafs }} | INTERFACE = {{ static_bindings.results[index].invocation.module_args.interface }} | VLAN = {{ static_bindings.results[index].current[index2].fvRsPathAtt.attributes.encap }}
+        {% endfor %}
+        {% endfor %}
+        {% endfor %}
