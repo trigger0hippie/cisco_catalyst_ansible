@@ -9,7 +9,7 @@
 #    "bridge_domains": [
 #	{"name": "Services_BD","description": "Managed by Ansible", "vrf": "UserServices_VRF", "subnet": "10.0.1.254/24"},
 #	{"name": "Services_BD", "description": "Managed by Ansible", "vrf": "UserServices_VRF", "subnet": "10.0.2.254/24"},
-#    {"name": "Services_BD", "description": "Managed by Ansible", "vrf": "UserServices_VRF", "subnet": "10.0.3.254/24"},
+# {"name": "Services_BD", "description": "Managed by Ansible", "vrf": "UserServices_VRF", "subnet": "10.0.3.254/24"},
 #	{"name": "Users_BD", "description": "Managed by Ansible", "vrf": "UserServices_VRF", "subnet": "10.0.4.254/24"}
 #    ]
 #  }
