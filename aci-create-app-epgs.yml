@@ -1,3 +1,23 @@
+#{
+#  "tenant": {
+#    "name": "TENANT_NAME",
+#    "description": "Managed by Ansible",
+#    "apps": [
+#      {"name": "UserServices_APP", "description": "Managed by Ansible"}
+#    ],
+#    "epgs": [
+#      {"name": "Web_EPG", "description": "Managed by Ansible", "ap": "UserServices_APP", "bd": "Services_BD", "domain": "phys"},
+#      {"name": "Email_EPG","description": "Managed by Ansible", "ap": "UserServices_APP", "bd": "Services_BD", "domain": "phys"},
+#      {"name": "Storage_EPG", "description": "Managed by Ansible", "ap": "UserServices_APP", "bd": "Services_BD", "domain": "phys"},
+#      {"name": "Users_EPG", "description": "Managed by Ansible", "ap": "UserServices_APP", "bd": "Users_BD", "domain": "phys"}
+#    ]
+#  },
+#  "domains": {
+#    "phys": {
+#      "domain_type": "phys"
+#    }
+#  }
+#}
 ---
 - name: CREATE APPLICATION PROFILES AND EPGS
   hosts: all
