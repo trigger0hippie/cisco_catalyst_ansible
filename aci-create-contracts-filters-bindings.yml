@@ -1,3 +1,35 @@
+# vars need to be entered separately, eg in a job template in AWX
+#{
+#  "tenant": {
+#    "name": "TENANT_NAME",
+#    "description": "Managed by Ansible",
+#    "filters": [
+#      {"name": "web_filter", "description": "Managed by Ansible", "entry": "http", "ethertype": "ip", "ip_protocol": "tcp", "destination_from": "80", "destination_to": "80"},
+#      {"name": "web_filter", "description": "Managed by Ansible", "entry": "https", "ethertype": "ip", "ip_protocol": "tcp", "destination_from": "443", "destination_to": "443"},
+#      {"name": "email_filter", "description": "Managed by Ansible", "entry": "smtp", "ethertype": "ip", "ip_protocol": "tcp", "destination_from": "25", "destination_to": "25"},
+#      {"name": "email_filter", "description": "Managed by Ansible", "entry": "smtps", "ethertype": "ip", "ip_protocol": "tcp", "destination_from": "587", "destination_to": "587"},
+#      {"name": "email_filter", "description": "Managed by Ansible", "entry": "imaps", "ethertype": "ip", "ip_protocol": "tcp", "destination_from": "993", "destination_to": "993"},
+#      {"name": "storage_filter", "description": "Managed by Ansible", "entry": "pgsql", "ethertype": "ip", "ip_protocol": "tcp", "destination_from": "5432", "destination_to": "5432"}
+#    ],
+#    "contracts": [
+#      {"name": "WebServices_CON", "filter": "web_filter", "description": "Managed by Ansible"},
+#      {"name": "WebServices_CON", "filter": "icmp", "description": "Managed by Ansible"},
+#      {"name": "EmailServices_CON", "filter": "email_filter", "description": "Managed by Ansible"},
+#      {"name": "EmailServices_CON", "filter": "icmp", "description": "Managed by Ansible"},
+#      {"name": "StorageServices_CON", "filter": "storage_filter", "description": "Managed by Ansible"},
+#      {"name": "StorageServices_CON", "filter": "icmp", "description": "Managed by Ansible"}
+#    ],
+#    "contract_bindings": [
+#      {"epg": "Users_EPG", "ap": "UserServices_APP", "contract": "WebServices_CON", "type": "consumer"},
+#      {"epg": "Web_EPG", "ap": "UserServices_APP", "contract": "WebServices_CON", "type": "provider"},
+#      {"epg": "Users_EPG", "ap": "UserServices_APP", "contract": "EmailServices_CON", "type": "consumer"},
+#      {"epg": "Email_EPG", "ap": "UserServices_APP", "contract": "EmailServices_CON", "type": "provider"},
+#      {"epg": "Web_EPG", "ap": "UserServices_APP", "contract": "StorageServices_CON", "type": "consumer"},
+#      {"epg": "Email_EPG", "ap": "UserServices_APP", "contract": "StorageServices_CON", "type": "consumer"},
+#      {"epg": "Storage_EPG", "ap": "UserServices_APP", "contract": "StorageServices_CON", "type": "provider"}
+#    ]
+#  }
+#}
 ---
 - name: CREATE FILTERS AND FILTER ENTRIES
   hosts: all
