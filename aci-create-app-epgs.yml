@@ -1,3 +1,4 @@
+# vars need to be entered separately, eg in a job template in AWX
 #{
 #  "tenant": {
 #    "name": "TENANT_NAME",
