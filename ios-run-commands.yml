@@ -11,9 +11,9 @@
           - show version | i Version
           - show ip int brief | i Vlan400
       register: output
-    # - name: Display output
-    #   debug:
-    #     var: output.stdout_lines 
+    - name: Display output
+      debug:
+        var: output.stdout_lines 
     - name: Save to file
       copy: 
         content: "{{ output.stdout_lines }}"
