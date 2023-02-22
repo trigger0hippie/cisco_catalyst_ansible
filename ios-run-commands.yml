@@ -11,4 +11,8 @@
       register: output
     - name: Display output
       debug:
-        msg: "{{ output.stdout_lines | zip(output.stdout_lines) | to_nice_yaml }}" 
+        var: output.stdout_lines 
+    - name: Save to file
+      copy: 
+        content: output.stdout_lines
+        dest: /c/Users/{{ inventory_hostname }}.txt
