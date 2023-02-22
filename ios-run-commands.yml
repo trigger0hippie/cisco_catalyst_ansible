@@ -1,7 +1,7 @@
 - name: CISCO IOS CATALYST RUN COMMANDS
   hosts: all
   gather_facts: false
-  connection: local
+  #connection: local
   vars:
     validate_certs: no
   tasks: 
