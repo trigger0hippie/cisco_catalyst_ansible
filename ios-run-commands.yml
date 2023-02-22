@@ -16,5 +16,5 @@
     #     var: output.stdout_lines 
     - name: Save to file
       copy: 
-        content: output.stdout_lines
+        content: "{{ output.stdout_lines }}"
         dest: /awx-output-folder/{{ inventory_hostname }}.txt
