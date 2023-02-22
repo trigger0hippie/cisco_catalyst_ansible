@@ -1,0 +1,10 @@
+- name: CISCO IOS CATALYST RUN COMMANDS
+  hosts: all
+  gather_facts: false
+  connection: local
+  vars:
+    validate_certs: no
+  tasks: 
+    - name: Run show version on remote devices
+      cisco.ios.ios_command:
+      commands: show version
