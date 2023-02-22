@@ -11,10 +11,10 @@
           - show version | i Version
           - show ip int brief | i Vlan400
       register: output
-    - name: Display output
-      debug:
-        var: output.stdout_lines 
-    # - name: Save to file
-    #   copy: 
-    #     content: output.stdout_lines
-    #     dest: /c/Users/{{ inventory_hostname }}.txt
+    # - name: Display output
+    #   debug:
+    #     var: output.stdout_lines 
+    - name: Save to file
+      copy: 
+        content: output.stdout_lines
+        dest: /awx-output-folder/{{ inventory_hostname }}.txt
