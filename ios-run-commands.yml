@@ -8,7 +8,7 @@
     - name: Run show version on remote devices
       cisco.ios.ios_command:
         commands: show version
-#      register: output
-#    - name: Display output
-#      debug:
-#        msg: " {{ output.stdout_lines }}"
+      register: output
+    - name: Display output
+      debug:
+        msg: "{{ output.stdout_lines | zip(output.stdout_lines) | to_nice_yaml }}" 
