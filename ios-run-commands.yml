@@ -9,7 +9,7 @@
       cisco.ios.ios_command:
         commands: 
           - show version
-          - show ip int brief
+          - show ip int brief | i Vlan400
       register: output
     - name: Display output
       debug:
