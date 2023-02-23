@@ -23,3 +23,9 @@
       copy: 
         content: "{{ ansible_facts | to_nice_yaml }}"
         dest: /awx-output-folder/{{ inventory_hostname }}-facts.txt
+    - name: Config backup
+      ios_config:
+        backup: True
+        backup_options:
+          dir_path: /awx-output-folder
+          
