@@ -9,7 +9,7 @@
       cisco.ios.ios_command:
         commands: 
           - show version 
-          - show ip int brief | i Vlan400
+          - show ip int brief 
         wait_for: result[0] contains IOS
       register: output
 #    - name: Display output
