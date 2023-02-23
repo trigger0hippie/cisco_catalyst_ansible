@@ -17,5 +17,5 @@
 #       var: output.stdout_lines 
     - name: Save to file
       copy: 
-        content: "{{ output.stdout_lines | to_nice_yaml  }}"
+        content: "{{ output.stdout_lines | zip(output.stdout_lines) | to_nice_yaml  }}"
         dest: /awx-output-folder/{{ inventory_hostname }}.txt
