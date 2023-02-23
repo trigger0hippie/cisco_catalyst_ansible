@@ -12,10 +12,10 @@
 #    - name: Display output
 #      debug:
 #       var: output.stdout_lines  
-#    - name: Save to file
-#      copy: 
-#        content: "{{ output.stdout_lines | to_nice_yaml  }}"
-#        dest: /awx-output-folder/{{ inventory_hostname }}.txt
+    - name: Save to file
+      copy: 
+        content: "{{ output.stdout_lines | to_nice_yaml  }}"
+        dest: /awx-output-folder/{{ inventory_hostname }}/{{ inventory_hostname }}-commands.txt
 #    - name: Save facts to file
 #      copy: 
 #        content: "{{ ansible_facts | to_nice_yaml }}"
