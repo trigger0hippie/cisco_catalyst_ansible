@@ -10,12 +10,12 @@
         commands: 
           - show version 
           - show ip int brief 
-        wait_for: result[0] contains IOS
+        #wait_for: result[0] contains IOS
       register: output
 #    - name: Display output
 #      debug:
 #       var: output.stdout_lines 
     - name: Save to file
       copy: 
-        content: "{{ output.stdout_lines | zip(output.stdout_lines) | to_nice_yaml  }}"
+        content: "{{ output.stdout_lines | to_nice_yaml  }}"
         dest: /awx-output-folder/{{ inventory_hostname }}.txt
