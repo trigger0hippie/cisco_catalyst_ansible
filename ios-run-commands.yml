@@ -15,6 +15,9 @@
 #    - name: Display output
 #      debug:
 #       var: output.stdout_lines 
+    - name: Current date_time
+      debug:
+        var: ansible_date_time
     - name: Save to file
       copy: 
         content: "{{ output.stdout_lines | to_nice_yaml  }}"
