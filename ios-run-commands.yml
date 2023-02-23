@@ -11,10 +11,11 @@
           - show version | i Version
           - show ip int brief | i Vlan400
       register: output
-    - name: Display output
-      debug:
-        var: output.stdout_lines 
+#    - name: Display output
+#      debug:
+#       var: output.stdout_lines 
     - name: Save to file
+      when: output.stdout_lines
       copy: 
-        content: "{{ output.stdout_lines | replace('"', '\n')  }}"
+        content: "{{ output.stdout_lines | to_nice_yaml  }}"
         dest: /awx-output-folder/{{ inventory_hostname }}.txt
