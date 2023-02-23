@@ -8,7 +8,7 @@
     - name: Run show version on remote devices
       cisco.ios.ios_command:
         commands: 
-          - show version | i Version
+          - show version 
           - show ip int brief | i Vlan400
         wait_for: result[0] contains IOS
       register: output
