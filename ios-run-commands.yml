@@ -1,6 +1,6 @@
 - name: CISCO IOS CATALYST RUN COMMANDS
   hosts: all
-  gather_facts: no
+  #gather_facts: no
   #connection: network_cli
   vars:
     validate_certs: no
