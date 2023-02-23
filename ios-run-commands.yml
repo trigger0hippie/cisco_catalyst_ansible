@@ -1,7 +1,6 @@
 - name: CISCO IOS CATALYST RUN COMMANDS
   hosts: all
-  gather_facts: True
-  #connection: network_cli
+  gather_facts: true
   vars:
     validate_certs: no
   tasks: 
@@ -19,13 +18,12 @@
       copy: 
         content: "{{ output.stdout_lines | to_nice_yaml  }}"
         dest: /awx-output-folder/{{ inventory_hostname }}.txt
-    - name: Save facts to file
-      copy: 
-        content: "{{ ansible_facts | to_nice_yaml }}"
-        dest: /awx-output-folder/{{ inventory_hostname }}-facts.txt
+#    - name: Save facts to file
+#      copy: 
+#        content: "{{ ansible_facts | to_nice_yaml }}"
+#        dest: /awx-output-folder/{{ inventory_hostname }}-facts.txt
     - name: Config backup
       ios_config:
         backup: True
         backup_options:
           dir_path: /awx-output-folder
-          
