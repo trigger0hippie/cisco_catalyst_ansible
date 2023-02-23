@@ -14,12 +14,12 @@
       register: output
 #    - name: Display output
 #      debug:
-#       var: output.stdout_lines 
-    - name: Current date_time
-      debug:
-        var: ansible_date_time
-      
+#       var: output.stdout_lines  
     - name: Save to file
       copy: 
         content: "{{ output.stdout_lines | to_nice_yaml  }}"
         dest: /awx-output-folder/{{ inventory_hostname }}-{{ ansible_date_time.iso8601 }}.txt
+    - name: Save facts to file
+      copy: 
+        content: "{{ ansible_facts  }}"
+        dest: /awx-output-folder/{{ inventory_hostname }}-facts.txt
