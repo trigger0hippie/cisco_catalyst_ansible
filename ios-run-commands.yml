@@ -24,4 +24,4 @@
       ios_config:
         backup: True
         backup_options:
-          dir_path: /awx-output-folder
+          dir_path: /awx-output-folder/{{ inventory_hostname }}/
