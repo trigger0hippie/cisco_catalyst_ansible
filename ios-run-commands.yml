@@ -22,4 +22,4 @@
     - name: Save to file
       copy: 
         content: "{{ output.stdout_lines | to_nice_yaml  }}"
-        dest: /awx-output-folder/{{ inventory_hostname }}-{{ ansible_date_time.iso8601 }}.txt
+        dest: /awx-output-folder/{{ inventory_hostname }}-{{ ansible_date_time }}.txt
