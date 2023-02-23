@@ -10,6 +10,7 @@
         commands: 
           - show version | i Version
           - show ip int brief | i Vlan400
+        wait_for: result[0] contains IOS
       register: output
 #    - name: Display output
 #      debug:
