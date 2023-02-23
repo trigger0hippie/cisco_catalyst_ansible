@@ -1,8 +1,6 @@
 - name: CISCO IOS CATALYST RUN COMMANDS
   hosts: all
-  gather_facts: true
-  vars:
-    validate_certs: no
+  gather_facts: false
   tasks: 
     - name: Run show version on remote devices
       cisco.ios.ios_command:
@@ -10,14 +8,14 @@
           - show version 
           - show ip int brief 
         #wait_for: result[0] contains IOS
-      register: output
+      register: commands_output
 #    - name: Display output
 #      debug:
 #       var: output.stdout_lines  
-    - name: Save to file
-      copy: 
-        content: "{{ output.stdout_lines | to_nice_yaml  }}"
-        dest: /awx-output-folder/{{ inventory_hostname }}.txt
+#    - name: Save to file
+#      copy: 
+#        content: "{{ output.stdout_lines | to_nice_yaml  }}"
+#        dest: /awx-output-folder/{{ inventory_hostname }}.txt
 #    - name: Save facts to file
 #      copy: 
 #        content: "{{ ansible_facts | to_nice_yaml }}"
