@@ -1,0 +1,9 @@
+- name: CISCO IOS CATALYST BACKUP CONFIGURATION
+  hosts: all
+  gather_facts: false
+  tasks:     
+    - name: Config backup 
+      ios_config:
+        backup: True
+        backup_options:
+          dir_path: /awx-output-folder/{{ inventory_hostname }}/
