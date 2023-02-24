@@ -27,10 +27,10 @@
       ios_config:
         backup: True
         backup_options:
-          dir_path: /awx-output-folder/{{ inventory_hostname }}/
+          dir_path: /awx-output-folder/
       tags: config_backup
     - name: Configure top level configuration
       cisco.ios.ios_config:
-        lines: hostname {{ inventory_hostname }}_ANSIBLE2
+        lines: aaa authorization config-commands
         save_when: modified
       tags: configure
