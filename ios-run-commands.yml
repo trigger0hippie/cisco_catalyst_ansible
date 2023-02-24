@@ -1,5 +1,5 @@
 - name: CISCO IOS CATALYST RUN COMMANDS
-  hosts: 
+  hosts: all
   gather_facts: false
   ignore_unreachable: yes
   tasks: 
