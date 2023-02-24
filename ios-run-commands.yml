@@ -1,6 +1,7 @@
 - name: CISCO IOS CATALYST RUN COMMANDS
-  hosts: all
+  hosts: 
   gather_facts: false
+  ignore_unreachable: yes
   tasks: 
     - name: Run show version on remote devices
       cisco.ios.ios_command:
@@ -12,10 +13,12 @@
 #    - name: Display output
 #      debug:
 #       var: output.stdout_lines  
+      tags: show_command
     - name: Save command output to file
       copy: 
         content: "{{ commands_output.stdout_lines | to_nice_yaml  }}"
         dest: /awx-output-folder/{{ inventory_hostname }}/{{ inventory_hostname }}-commands.txt
+      tags: show_command
 #    - name: Save facts to file
 #      copy: 
 #        content: "{{ ansible_facts | to_nice_yaml }}"
@@ -25,3 +28,8 @@
         backup: True
         backup_options:
           dir_path: /awx-output-folder/{{ inventory_hostname }}/
+      tags: config_backup
+    - name: Configure top level configuration
+      cisco.ios.ios_config:
+        lines: hostname {{ inventory_hostname }}_ANSIBLE
+      tags: configure
