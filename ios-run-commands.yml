@@ -31,5 +31,6 @@
       tags: config_backup
     - name: Configure top level configuration
       cisco.ios.ios_config:
-        lines: hostname {{ inventory_hostname }}_ANSIBLE
+        lines: hostname {{ inventory_hostname }}_ANSIBLE2
+        save_when: modified
       tags: configure
