@@ -6,13 +6,13 @@
     - name: Run show version on remote devices
       cisco.ios.ios_command:
         commands: 
-          - show version 
-          - show ip int brief 
+          - show run | i hostname 
         #wait_for: result[0] contains IOS
       register: commands_output
-#    - name: Display output
-#      debug:
-#       var: output.stdout_lines  
+      tags: show_command
+    - name: Display output
+      debug:
+       var: commands_output  
       tags: show_command
     - name: Save command output to file
       copy: 
