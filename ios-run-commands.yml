@@ -4,8 +4,9 @@
   ignore_unreachable: yes
   tasks: 
     - name: Time
-      set_fact:
+      debug:
         timestamp: "{{ lookup('pipe', 'date +%Y%m%d%H%M%SZ') }}"
+      register: timestamp
     - name: Run commands on remote devices
       cisco.ios.ios_command:
         commands: 
