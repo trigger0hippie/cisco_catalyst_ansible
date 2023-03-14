@@ -1,6 +1,6 @@
 - name: CISCO IOS CATALYST RUN COMMANDS
   hosts: all
-  gather_facts: true
+  gather_facts: yes
   ignore_unreachable: yes
   tasks: 
     - name: Run commands on remote devices
