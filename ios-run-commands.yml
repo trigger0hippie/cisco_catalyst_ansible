@@ -11,16 +11,16 @@
         #wait_for: result[0] contains IOS
       register: command_output
       tags: show_command
-    - name: Display output
-      debug:
-       msg: "{{ inventory_hostname }}, aktivno {{ command_output.stdout_lines[0] | length }} interfacea, serijski broj {{ (command_output.stdout_lines[1] | to_nice_yaml).strip('-\n') }}"
-      tags: show_command
+    # - name: Display output
+    #   debug:
+    #    msg: "{{ inventory_hostname }}, aktivno {{ command_output.stdout_lines[0] | length }} interfacea, serijski broj {{ (command_output.stdout_lines[1] | to_nice_yaml).strip('-\n') }}"
+    #   tags: show_command
     - name: Save command output to file
       blockinfile: 
         state: present
         insertafter: EOF
         #content: "{{ commands_output.stdout_lines | to_nice_yaml  }}"
-        content: "{{ inventory_hostname }}, aktivno {{ command_output.stdout_lines[0] | length }} interfacea, serijski broj {{ command_output.stdout_lines[1] }}"
+        content: "{{ inventory_hostname }}, aktivno {{ command_output.stdout_lines[0] | length }} interfacea, serijski broj {{ (command_output.stdout_lines[1] | to_nice_yaml).strip('-\n') }}"
         marker: ""
         dest: /awx-output-folder/hrsume/commands_output.txt
       tags: show_command
