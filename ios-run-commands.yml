@@ -19,7 +19,7 @@
       tags: show_command
     - name: Display output
       debug:
-       msg: "{{ int_status_output }} + {{ serial_output }}"
+       msg: "{{ int_status_output.stdout_lines }} + {{ serial_output.stdout_lines }}"
       tags: show_command
     - name: Save command output to file
       copy: 
