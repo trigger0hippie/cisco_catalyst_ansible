@@ -3,7 +3,7 @@
   gather_facts: false
   ignore_unreachable: yes
   tasks: 
-    - name: Run show version on remote devices
+    - name: Run commands on remote devices
       cisco.ios.ios_command:
         commands: 
           - show int status | i connected
