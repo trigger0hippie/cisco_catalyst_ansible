@@ -17,7 +17,7 @@
     - name: Save command output to file
       copy: 
         content: "{{ commands_output.stdout_lines | to_nice_yaml  }}"
-        dest: /awx-output-folder/{{ inventory_hostname }}/{{ inventory_hostname }}-commands.txt
+        dest: /awx-output-folder/{{ inventory_hostname }}-commands.txt
       tags: show_command
 #    - name: Save facts to file
 #      copy: 
