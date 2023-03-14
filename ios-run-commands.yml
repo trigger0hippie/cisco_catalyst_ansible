@@ -26,7 +26,7 @@
         state: present
         insertafter: EOF
         #content: "{{ commands_output.stdout_lines | to_nice_yaml  }}"
-        content: "{{ inventory_hostname }}, aktivno {{ int_status_output.stdout_lines  | length }} interfacea, serijski broj"
+        content: "{{ inventory_hostname }}, aktivno {{ int_status_output.stdout_lines[0]  | length }} interfacea, serijski broj"
         dest: /awx-output-folder/hrsume/commands_output.txt
       tags: show_command
 #    - name: Save facts to file
