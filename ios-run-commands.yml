@@ -6,7 +6,7 @@
     - name: Run show version on remote devices
       cisco.ios.ios_command:
         commands: 
-          - show ip route
+          - show int status
         #wait_for: result[0] contains IOS
       register: commands_output
       tags: show_command
