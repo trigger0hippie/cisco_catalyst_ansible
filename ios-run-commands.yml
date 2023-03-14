@@ -2,12 +2,11 @@
   hosts: all
   gather_facts: false
   ignore_unreachable: yes
-  connection: network_cli
   tasks: 
     - name: Run show version on remote devices
       cisco.ios.ios_command:
         commands: 
-          - show int status
+          - show int status | i connected
         #wait_for: result[0] contains IOS
       register: commands_output
       tags: show_command
