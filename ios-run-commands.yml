@@ -7,6 +7,7 @@
       debug:
         msg: "{{ lookup('pipe', 'date +%Y%m%d%H%M%SZ') }}"
       register: timestamp
+      tags: show_command
     - name: Run commands on remote devices
       cisco.ios.ios_command:
         commands: 
