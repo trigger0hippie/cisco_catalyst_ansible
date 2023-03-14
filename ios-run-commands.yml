@@ -7,28 +7,23 @@
       cisco.ios.ios_command:
         commands: 
           - show int status | i connected
-        #wait_for: result[0] contains IOS
-      register: int_status_output
-      tags: show_command
-    - name: Run commands on remote devices
-      cisco.ios.ios_command:
-        commands: 
           - show snmp chassis
         #wait_for: result[0] contains IOS
-      register: serial_output
+      register: command_output
       tags: show_command
     - name: Display output
       debug:
-       msg: "{{ int_status_output.stdout_lines }} + {{ serial_output.stdout_lines }}"
+       msg: "{{ command_output.stdout_lines[1] }}" 
       tags: show_command
-    - name: Save command output to file
-      blockinfile: 
-        state: present
-        insertafter: EOF
-        #content: "{{ commands_output.stdout_lines | to_nice_yaml  }}"
-        content: "{{ inventory_hostname }}, aktivno {{ int_status_output.stdout_lines[0]  | length }} interfacea, serijski broj"
-        dest: /awx-output-folder/hrsume/commands_output.txt
-      tags: show_command
+    # - name: Save command output to file
+    #   blockinfile: 
+    #     state: present
+    #     insertafter: EOF
+    #     #content: "{{ commands_output.stdout_lines | to_nice_yaml  }}"
+    #     content: "{{ inventory_hostname }}, aktivno {{ int_status_output.stdout_lines[0]  | length }} interfacea, serijski broj"
+    #     marker: ""
+    #     dest: /awx-output-folder/hrsume/commands_output.txt
+    #   tags: show_command
 #    - name: Save facts to file
 #      copy: 
 #        content: "{{ ansible_facts | to_nice_yaml }}"
