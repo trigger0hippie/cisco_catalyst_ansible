@@ -2,6 +2,7 @@
   hosts: all
   gather_facts: false
   ignore_unreachable: yes
+  connection: network_cli
   tasks: 
     - name: Run show version on remote devices
       cisco.ios.ios_command:
