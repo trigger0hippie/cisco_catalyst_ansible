@@ -2,6 +2,7 @@
   hosts: all
   gather_facts: True
   ignore_unreachable: yes
+  serial: 1
   tasks: 
     # - name: Gather all facts
     #   cisco.ios.ios_facts:
