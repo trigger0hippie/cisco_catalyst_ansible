@@ -3,7 +3,7 @@
   gather_facts: True
   ignore_unreachable: yes
   tasks: 
-    - name: Gather all legacy facts
+    - name: Gather all facts
       cisco.ios.ios_facts:
         gather_subset: all
       register: facts
