@@ -1,17 +1,15 @@
-# - name: Time
-#   hosts: localhost
-#   gather_facts: False
-#   tasks: 
-#     - set_fact:
-#         timestamp: "{{ lookup('pipe', 'date +%Y%m%d%H%M%SZ') }}"
-#       tags: time
-#       register: timestamp
-
 - name: CISCO IOS CATALYST RUN COMMANDS
   hosts: all
   gather_facts: True
   ignore_unreachable: yes
   tasks: 
+    - name: Gather all legacy facts
+        cisco.ios.ios_facts:
+        gather_subset: all
+      register: facts
+    - name: Display facts
+      debug: 
+        var: facts
     - name: Run commands on remote devices
       cisco.ios.ios_command:
         commands: 
