@@ -32,6 +32,7 @@
         line: "{{ inventory_hostname }}, aktivnih interfacea {{ command_output.stdout_lines[0] | length }}, serijski broj {{ (command_output.stdout_lines[1] | to_nice_yaml).strip('-\n') }}"
         #marker: ""
         path: /awx-output-folder/commands_output.txt
+        create: yes
       tags: show_command
 #    - name: Save facts to file
 #      copy: 
