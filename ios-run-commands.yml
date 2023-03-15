@@ -20,18 +20,15 @@
       tags: show_command
     - name: Display output
       debug:
-        msg: "{{ loop.index }}: {{ ansible_net_hostname }}, aktivnih interfacea {{ command_output.stdout_lines[0] | length }}, serijski broj {{ ansible_net_serialnum }}, model {{ ansible_net_model }}"
+        msg: "{{ ansible_net_hostname }}, aktivnih interfacea {{ command_output.stdout_lines[0] | length }}, serijski broj {{ ansible_net_serialnum }}, model {{ ansible_net_model }}"
       tags: show_command
     - name: Save command output to file
       lineinfile: 
-        #state: present
-        #insertafter: EOF
         #content: "{{ commands_output.stdout_lines | to_nice_yaml  }}"
         line: "{{ ansible_net_hostname }}, aktivnih interfacea {{ command_output.stdout_lines[0] | length }}, serijski broj {{ ansible_net_serialnum }}, model {{ ansible_net_model }}"
-        #marker: ""
         path: /awx-output-folder/commands_output.txt
         create: yes
-      tags: show_command2
+      tags: show_command
 #    - name: Save facts to file
 #      copy: 
 #        content: "{{ ansible_facts | to_nice_yaml }}"
