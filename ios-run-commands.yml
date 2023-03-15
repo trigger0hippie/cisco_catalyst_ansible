@@ -10,17 +10,17 @@
     # - name: Display facts
     #   debug: 
     #     var: facts
-    # - name: Run commands on remote devices
-    #   cisco.ios.ios_command:
-    #     commands: 
-    #       - show int status | i connected
-    #       - show snmp chassis
-    #     #wait_for: result[0] contains IOS
-    #   register: command_output
-    #  tags: show_command
+    - name: Run commands on remote devices
+      cisco.ios.ios_command:
+        commands: 
+          - show int status | i connected
+          #- show snmp chassis
+        #wait_for: result[0] contains IOS
+      register: command_output
+      tags: show_command
     - name: Display output
       debug:
-        msg: "{{ inventory_hostname }}, aktivnih interfacea {{ command_output.stdout_lines[0] }}, serijski broj {{ (command_output.stdout_lines[1] | to_nice_yaml).strip('-\n') }}"
+        msg: "{{ ansible_facts.ansible_net_hostname }}, aktivnih interfacea {{ command_output.stdout_lines[0] }}, serijski broj {{ (ansible_facts.ansible_net_serialnum }}, model {{ ansible_facts.ansible_net_model }}"
       tags: show_command
     - name: Save command output to file
       lineinfile: 
@@ -31,7 +31,7 @@
         #marker: ""
         path: /awx-output-folder/commands_output.txt
         create: yes
-      tags: show_command
+      tags: show_command2
 #    - name: Save facts to file
 #      copy: 
 #        content: "{{ ansible_facts | to_nice_yaml }}"
