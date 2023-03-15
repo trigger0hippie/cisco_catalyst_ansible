@@ -9,7 +9,7 @@
   serial: 1
   vars:
     # Get current date from localhost
-    current_datetime: "{{ hostvars['localhost'].ansible_date_time.iso8601 }}"
+    current_datetime: "{{ hostvars['localhost'].ansible_date_time.date }}"
   tasks: 
     # - name: Gather all facts
     #   cisco.ios.ios_facts:
