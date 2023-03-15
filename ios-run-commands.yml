@@ -25,7 +25,7 @@
     - name: Save command output to file
       lineinfile: 
         #content: "{{ commands_output.stdout_lines | to_nice_yaml  }}"
-        line: "{{ ansible_date_time }}{{ ansible_net_hostname }}, aktivnih interfacea {{ command_output.stdout_lines[0] | length }}, serijski broj {{ ansible_net_serialnum }}, model {{ ansible_net_model }}, IOS {{ ansible_net_version }}"
+        line: "{{ ansible_net_hostname }}, aktivnih interfacea {{ command_output.stdout_lines[0] | length }}, serijski broj {{ ansible_net_serialnum }}, model {{ ansible_net_model }}, IOS {{ ansible_net_version }}"
         path: /awx-output-folder/commands_output.txt
         create: yes
       tags: show_command
