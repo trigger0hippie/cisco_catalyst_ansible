@@ -1,11 +1,12 @@
-# - name: Time
-#   hosts: localhost
-#   gather_facts: False
-#   ignore_unreachable: yes
-#   tasks: 
-#     - set_fact:
-#         timestamp: "{{ lookup('pipe', 'date +%Y%m%d%H%M%SZ') }}"
-#       tags: show_command
+- name: Time
+  hosts: localhost
+  gather_facts: False
+  ignore_unreachable: yes
+  tasks: 
+    - set_fact:
+        timestamp: "{{ lookup('pipe', 'date +%Y%m%d%H%M%SZ') }}"
+      tags: time
+      register: timestamp
 
 - name: CISCO IOS CATALYST RUN COMMANDS
   hosts: all
@@ -29,9 +30,9 @@
         state: present
         insertafter: EOF
         #content: "{{ commands_output.stdout_lines | to_nice_yaml  }}"
-        content: "{{ inventory_hostname }}, aktivno {{ command_output.stdout_lines[0] | length }} interfacea, serijski broj {{ (command_output.stdout_lines[1] | to_nice_yaml).strip('-\n') }}"
+        content: "{{ inventory_hostname }}, aktivnih interfacea {{ command_output.stdout_lines[0] | length }}, serijski broj {{ (command_output.stdout_lines[1] | to_nice_yaml).strip('-\n') }}"
         marker: ""
-        dest: /awx-output-folder/hrsume/commands_output.txt
+        dest: /awx-output-folder/commands_output.txt
       tags: show_command
 #    - name: Save facts to file
 #      copy: 
