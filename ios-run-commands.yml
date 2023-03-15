@@ -1,8 +1,15 @@
+- name: LOCALHOST FACTS
+  hosts: localhost
+  gather_facts: yes
+
 - name: CISCO IOS CATALYST RUN COMMANDS
   hosts: all
   gather_facts: True
   ignore_unreachable: yes
   serial: 1
+  vars:
+    # Get current date from localhost
+    current_datetime: "{{ hostvars['localhost'].ansible_date_time.iso8601 }}"
   tasks: 
     # - name: Gather all facts
     #   cisco.ios.ios_facts:
@@ -23,12 +30,20 @@
       debug:
         msg: "{{ ansible_net_hostname }}, aktivnih interfacea {{ command_output.stdout_lines[0] | length }}, serijski broj {{ ansible_net_serialnum }}, model {{ ansible_net_model }}, IOS {{ ansible_net_version }}"
       tags: show_command
+    # - name: Save command output to file
+    #   lineinfile: 
+    #     #state: present
+    #     #content: "{{ commands_output.stdout_lines | to_nice_yaml  }}"
+    #     line: "{{ ansible_net_hostname }}, aktivnih interfacea {{ command_output.stdout_lines[0] | length }}, serijski broj {{ ansible_net_serialnum }}, model {{ ansible_net_model }}, IOS {{ ansible_net_version }}"
+    #     path: /awx-output-folder/commands_output.txt             
+    #   tags: show_command
     - name: Save command output to file
       lineinfile: 
         #state: present
         #content: "{{ commands_output.stdout_lines | to_nice_yaml  }}"
         line: "{{ ansible_net_hostname }}, aktivnih interfacea {{ command_output.stdout_lines[0] | length }}, serijski broj {{ ansible_net_serialnum }}, model {{ ansible_net_model }}, IOS {{ ansible_net_version }}"
-        path: /awx-output-folder/commands_output.txt             
+        path: /awx-output-folder/{{ current_datetime }}-commands_output.txt
+        create: true             
       tags: show_command
 #    - name: Save facts to file
 #      copy: 
