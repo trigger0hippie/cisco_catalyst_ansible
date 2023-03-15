@@ -20,7 +20,7 @@
       tags: show_command
     - name: Display output
       debug:
-        msg: "{{ ansible_facts.ansible_net_hostname }}, aktivnih interfacea {{ command_output.stdout_lines[0] }}, serijski broj {{ ansible_facts.ansible_net_serialnum }}, model {{ ansible_facts.ansible_net_model }}"
+        msg: "{{ facts.ansible_facts.ansible_net_hostname }}, aktivnih interfacea {{ command_output.stdout_lines[0] }}, serijski broj {{ facts.ansible_facts.ansible_net_serialnum }}, model {{ ansible_facts.ansible_net_model }}"
       tags: show_command
     - name: Save command output to file
       lineinfile: 
