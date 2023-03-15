@@ -5,7 +5,7 @@
     - set_fact:
         timestamp: "{{ lookup('pipe', 'date +%Y%m%d%H%M%SZ') }}"
       tags: time
-      #register: timestamp
+      register: timestamp
 
 - name: CISCO IOS CATALYST RUN COMMANDS
   hosts: all
