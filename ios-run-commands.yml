@@ -15,9 +15,11 @@
       cisco.ios.ios_facts:
         gather_subset: all
       register: facts
+      tags: facts
     - name: Display facts
       debug: 
          var: facts
+      tags: facts
     - name: Run commands on remote devices
       cisco.ios.ios_command:
         commands: 
