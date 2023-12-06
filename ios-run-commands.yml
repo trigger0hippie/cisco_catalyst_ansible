@@ -1,15 +1,15 @@
-- name: LOCALHOST FACTS
-  hosts: localhost
-  gather_facts: yes
+# - name: LOCALHOST FACTS
+#   hosts: localhost
+#   gather_facts: yes
 
 - name: CISCO IOS CATALYST RUN COMMANDS
   hosts: all
   gather_facts: True
   ignore_unreachable: yes
   serial: 1
-  vars:
-    # Get current date from localhost
-    current_datetime: "{{ hostvars['localhost'].ansible_date_time.date }}"
+  # vars:
+  #   # Get current date from localhost
+  #   current_datetime: "{{ hostvars['localhost'].ansible_date_time.date }}"
   tasks: 
     # - name: Gather all facts
     #   cisco.ios.ios_facts:
