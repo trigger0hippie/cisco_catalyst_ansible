@@ -33,7 +33,7 @@
       debug:
         msg: "{{ item | split(':') }}"
         #msg: "{{ ansible_net_hostname }}, aktivnih interfacea {{ command_output.stdout_lines[0] | length }}, serijski broj {{ ansible_net_serialnum }}, model {{ ansible_net_model }}, IOS {{ ansible_net_version }}"
-      with_items: {{ command_output.stdout_lines[0] }}
+      with_items: "{{ command_output.stdout_lines[0] }}"
       tags: show_command
     - name: Save command output to file
       lineinfile: 
