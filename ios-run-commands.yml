@@ -9,15 +9,15 @@
   serial: 1
   # vars:
   #   # Get current date from localhost
-  #   current_datetime: "{{ hostvars['localhost'].ansible_date_time.date }}"
+  #   current_datetime: "{{ hostvars['localhost'].ansible_date_time.date }}"0
   tasks: 
-    # - name: Gather all facts
-    #   cisco.ios.ios_facts:
-    #     gather_subset: all
-    #   register: facts
-    # - name: Display facts
-    #   debug: 
-    #     var: facts
+    - name: Gather all facts
+      cisco.ios.ios_facts:
+        gather_subset: all
+      register: facts
+    - name: Display facts
+      debug: 
+         var: facts
     - name: Run commands on remote devices
       cisco.ios.ios_command:
         commands: 
