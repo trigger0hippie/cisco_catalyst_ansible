@@ -41,15 +41,15 @@
     #     #command_output_hex_transformed: "{{ command_output_hex.stdout_lines | flatten | map('regex_replace', '^\\s*[^:]*:\\s*', '') | list }}"
     #     command_output_ver_transformed: "{{ command_output_ver.stdout_lines | flatten | map('regex_replace', '^\\s*[^:]*:\\s*', '') | list }}"
     #   tags: show_command
-    - name: Extract text after "SN:" in each line
-      debug:
-        msg: "{{ item | regex_replace('.*SN:(.*)$', '\\1') }}"
-      loop: "{{ command_output_ver.0 }}"  
-      tags: show_command
-    # - name: Display output
+    # - name: Extract text after "SN:" in each line
     #   debug:
-    #     msg: "{{ command_output_hex_transformed.1 }}"
+    #     msg: "{{ item | regex_replace('.*SN:(.*)$', '\\1') }}"
+    #   loop: "{{ command_output_ver }}"  
     #   tags: show_command
+    - name: Display output
+      debug:
+        msg: "{{ command_output_ver }}"
+      tags: show_command
     # - name: Save command output to file
     #   lineinfile: 
     #     #state: present
