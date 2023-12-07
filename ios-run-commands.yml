@@ -24,8 +24,6 @@
       cisco.ios.ios_command:
         commands: 
           - show pnp version | i UDI
-          #- show snmp chassis
-        #wait_for: result[0] contains IOS
       register: command_output_ver
       tags: show_command
     - name: Run commands on remote devices
@@ -43,7 +41,7 @@
     #   tags: show_command
     - name: Extract text after "SN:" in each line
       debug:
-        msg: "{{ item | regex_replace('.*SN:(.*)$', '\\1') | list }}"
+        msg: "{{ item | default([]) + [ item ] | regex_replace('.*SN:(.*)$', '\\1') }}"
       loop: "{{ command_output_ver.stdout_lines.0 }}"  
       when: "'SN' in item"
       tags: show_command
