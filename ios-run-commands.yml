@@ -38,7 +38,7 @@
       tags: show_command
     - name: Display output
       debug:
-        msg: "{{ item[1] | split(':') }}"
+        msg: "{{ item | split(':') }}"
         #msg: "{{ ansible_net_hostname }}, aktivnih interfacea {{ command_output.stdout_lines[0] | length }}, serijski broj {{ ansible_net_serialnum }}, model {{ ansible_net_model }}, IOS {{ ansible_net_version }}"
       with_items: "{{ command_output_hex.stdout_lines }}"
       tags: show_command
@@ -46,9 +46,10 @@
       lineinfile: 
         #state: present
         #content: "{{ command_output.stdout_lines | to_nice_yaml  }}"
-        line: "{{ inventory_hostname }}, {{ ansible_net_model }}, HEX {{ ansible_net_serialnum }}, {{ ansible_net_version }}"
+        line: "{{ inventory_hostname }}, {{ ansible_net_model }}, HEX {{ item[1] }}"
         path: /awx-output-folder/commands_output.txt
-        create: true             
+        create: true    
+      with_items: "{{ command_output_hex.stdout_lines }}"         
       tags: show_command
 #    - name: Save facts to file
 #      copy: 
