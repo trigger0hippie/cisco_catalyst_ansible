@@ -17,11 +17,11 @@
       register: facts
       tags: facts
       ignore_errors: yes
-    - name: Display facts
-      debug: 
-         var: facts
-      tags: facts
-      ignore_errors: yes
+    # - name: Display facts
+    #   debug: 
+    #      var: facts
+    #   tags: facts
+    #   ignore_errors: yes
     - name: Run commands on remote devices
       cisco.ios.ios_command:
         commands: 
