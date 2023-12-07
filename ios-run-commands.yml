@@ -16,16 +16,19 @@
         gather_subset: all
       register: facts
       tags: facts
+      ignore_errors: yes
     - name: Display facts
       debug: 
          var: facts
       tags: facts
+      ignore_errors: yes
     - name: Run commands on remote devices
       cisco.ios.ios_command:
         commands: 
           - show pnp version | i UDI
       register: command_output_ver
       tags: show_command
+      ignore_errors: yes
     - name: Run commands on remote devices
       cisco.ios.ios_command:
         commands: 
@@ -34,6 +37,7 @@
         #wait_for: result[0] contains IOS
       register: command_output_hex
       tags: show_command
+      ignore_errors: yes
     - name: Transform hex output
       set_fact:
         command_output_hex_transformed: "{{ command_output_hex.stdout_lines | flatten | map('regex_replace', '^\\s*[^:]*:\\s*', '') | list }}"
