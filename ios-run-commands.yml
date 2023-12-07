@@ -34,15 +34,14 @@
         #wait_for: result[0] contains IOS
       register: command_output_hex
       tags: show_command
-    # - name: Transform output
-    #   set_fact:
-    #     #command_output_hex_transformed: "{{ command_output_hex.stdout_lines | flatten | map('regex_replace', '^\\s*[^:]*:\\s*', '') | list }}"
-    #     command_output_ver_transformed: "{{ command_output_ver.stdout_lines | flatten | map('regex_replace', '^\\s*[^:]*:\\s*', '') | list }}"
-    #   tags: show_command
-    - name: Extract text after "SN:" in each line
-      debug:
-        msg: "{{ item | default([]) + [item | regex_replace('.*SN:(.*)$', '\\1')] }}"
-      loop: "{{ command_output_ver.stdout_lines.0 }}"  
+    - name: Transform hex output
+      set_fact:
+        command_output_hex_transformed: "{{ command_output_hex.stdout_lines | flatten | map('regex_replace', '^\\s*[^:]*:\\s*', '') | list }}"
+      tags: show_command
+    - name: Transform ver output
+      set_fact:
+        command_output_ver_transformed: "{{ command_output_ver_transformed | default([]) + [item | regex_replace('.*SN:(.*)$', '\\1')] }}"
+      loop: "{{ command_output_ver.stdout_lines.0 }}"
       when: "'SN' in item"
       tags: show_command
     # - name: Display output
