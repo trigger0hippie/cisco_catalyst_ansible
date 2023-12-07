@@ -45,6 +45,7 @@
       debug:
         msg: "{{ item | regex_replace('.*SN:(.*)$', '\\1') }}"
       loop: "{{ command_output_ver.stdout_lines.0 }}"  
+      when: "'SN' in item"
       tags: show_command
     # - name: Display output
     #   debug:
