@@ -43,9 +43,9 @@
     #   tags: show_command
     - name: Display output
       debug:
-        msg: "{{ item.1 | | map('regex_replace', '^\\s*[^:]*:\\s*', '') | list }}"
+        msg: "{{ item.1 | map('regex_replace', '^\\s*[^:]*:\\s*', '') | list }}"
         #msg: "{{ ansible_net_hostname }}, aktivnih interfacea {{ command_output.stdout_lines[0] | length }}, serijski broj {{ ansible_net_serialnum }}, model {{ ansible_net_model }}, IOS {{ ansible_net_version }}"
-      loop: "{{ command_output_hex.stdout_lines }}"
+      with_items: "{{ command_output_hex.stdout_lines }}"
       tags: show_command
     # - name: Save command output to file
     #   lineinfile: 
