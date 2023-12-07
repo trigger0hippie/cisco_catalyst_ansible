@@ -48,14 +48,13 @@
     #   debug:
     #     msg: "{{ command_output_ver }}"
     #   tags: show_command
-    # - name: Save command output to file
-    #   lineinfile: 
-    #     #state: present
-    #     #content: "{{ command_output.stdout_lines | to_nice_yaml  }}"
-    #     line: "{{ inventory_hostname }}, {{ ansible_net_model }}, {{ item }}"
-    #     path: /awx-output-folder/commands_output.txt
-    #     create: true    
-    #   with_items: "{{ command_output_hex.stdout_lines }}"         
+    - name: Save command output to file
+      lineinfile: 
+        #state: present
+        #content: "{{ command_output.stdout_lines | to_nice_yaml  }}"
+        line: "{{ inventory_hostname }}, {{ ansible_net_model }}, {{ command_output_hex_transformed }}, {{ command_output_ver_transformed }}"
+        path: /awx-output-folder/commands_output.txt
+        create: true            
       tags: show_command
 #    - name: Save facts to file
 #      copy: 
