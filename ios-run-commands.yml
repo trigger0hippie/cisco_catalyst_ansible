@@ -43,8 +43,7 @@
     #   tags: show_command
     - name: Transform output
       set_fact:
-        command_output_hex_transformed: "{{ command_output_hex_transformed | flatten | map('regex_replace', '^\\s*[^:]*:\\s*', '') | list }}"
-      with_list: "{{ command_output_hex.stdout_lines }}"
+        command_output_hex_transformed: "{{ command_output_hex.stdout_lines | flatten | map('regex_replace', '^\\s*[^:]*:\\s*', '') | list }}"
       tags: show_command
     - name: Display output
       debug:
