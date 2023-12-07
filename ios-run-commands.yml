@@ -43,7 +43,7 @@
     #   tags: show_command
     - name: Extract text after "SN:" in each line
       debug:
-        msg: "{{ item | regex_replace('.*SN:(.*)$', '\\1') }}"
+        msg: "{{ item | regex_replace('.*SN:(.*)$', '\\1') | list }}"
       loop: "{{ command_output_ver.stdout_lines.0 }}"  
       when: "'SN' in item"
       tags: show_command
