@@ -52,7 +52,7 @@
       lineinfile: 
         #state: present
         #content: "{{ command_output.stdout_lines | to_nice_yaml  }}"
-        line: "{{ inventory_hostname }}, {{ ansible_net_model }}, {{ command_output_hex_transformed }}, {{ command_output_ver_transformed }}"
+        line: "{{ inventory_hostname }}, {{ ansible_net_model }}, {{ command_output_ver_transformed.0 }}, {{ command_output_ver_transformed.1 }}, {{ command_output_hex_transformed.1 }}"
         path: /awx-output-folder/commands_output.txt
         create: true            
       tags: show_command
