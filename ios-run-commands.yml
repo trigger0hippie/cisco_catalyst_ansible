@@ -4,7 +4,7 @@
 
 - name: CISCO IOS CATALYST RUN COMMANDS
   hosts: all
-  gather_facts: True
+  gather_facts: False
   ignore_unreachable: True
   serial: 1
   # vars:
