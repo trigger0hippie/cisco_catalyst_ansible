@@ -5,7 +5,7 @@
 - name: CISCO IOS CATALYST RUN COMMANDS
   hosts: all
   gather_facts: True
-  ignore_unreachable: yes
+  ignore_unreachable: True
   serial: 1
   # vars:
   #   # Get current date from localhost
