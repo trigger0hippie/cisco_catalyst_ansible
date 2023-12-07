@@ -44,12 +44,12 @@
     - name: Extract text after "SN:" in each line
       debug:
         msg: "{{ item | regex_replace('.*SN:(.*)$', '\\1') }}"
-      loop: "{{ command_output_ver | flatten }}"  
+      loop: "{{ command_output_ver.0 }}"  
       tags: show_command
-    - name: Display output
-      debug:
-        msg: "{{ command_output_hex_transformed.1 }}"
-      tags: show_command
+    # - name: Display output
+    #   debug:
+    #     msg: "{{ command_output_hex_transformed.1 }}"
+    #   tags: show_command
     # - name: Save command output to file
     #   lineinfile: 
     #     #state: present
