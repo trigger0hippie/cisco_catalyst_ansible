@@ -36,6 +36,11 @@
         #wait_for: result[0] contains IOS
       register: command_output_hex
       tags: show_command
+    - name: Extract text after colon
+      debug:
+        msg: "{{ item | map('regex_replace', '^\\s*[^:]*:\\s*', '') | list }}"
+      loop: "{{ command_output_hex.stdout_lines }}"
+      tags: show_command
     - name: Display output
       debug:
         msg: "{{ item | split(':') }}"
